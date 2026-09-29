@@ -1,0 +1,33 @@
+name: Fix interface image
+
+on:
+  push:
+    paths:
+      - ".publication/interface.b64.txt"
+      - ".github/workflows/fix-interface.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  fix:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Decode original interface screenshot
+        run: |
+          mkdir -p docs/images
+          base64 -d .publication/interface.b64.txt > docs/images/interface.png
+          test "$(stat -c%s docs/images/interface.png)" -eq 33418
+          rm -f .publication/interface.b64.txt
+          rm -f .publication/source_bundle.zip
+          rm -f .github/workflows/publish-source.yml
+          rm -f .github/workflows/fix-interface.yml
+          rmdir .publication 2>/dev/null || true
+      - name: Commit corrected image
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "Fix README interface screenshot"
+          git push
