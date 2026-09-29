@@ -1,0 +1,35 @@
+name: Publish source tree
+
+on:
+  push:
+    paths:
+      - ".publication/source_bundle.zip"
+      - ".github/workflows/publish-source.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Expand clean source bundle
+        run: |
+          unzip -o .publication/source_bundle.zip -d .
+          rm -f .publication/source_bundle.zip
+          rm -f .github/workflows/publish-source.yml
+          rmdir .publication 2>/dev/null || true
+          rmdir .github/workflows 2>/dev/null || true
+          rmdir .github 2>/dev/null || true
+      - name: Commit source files
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          if git diff --cached --quiet; then
+            echo "Nothing to publish"
+          else
+            git commit -m "Publish clean Office Vision Tracker source"
+            git push
+          fi
