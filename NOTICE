@@ -1,0 +1,9 @@
+Office Vision Tracker
+
+This product includes software developed using Google MediaPipe
+(https://github.com/google-ai-edge/mediapipe), licensed under the Apache License 2.0.
+
+MediaPipe and Google are trademarks or projects of their respective owners.
+This repository is an independent engineering project and is not affiliated with or endorsed by Google.
+
+The MediaPipe model weights are not redistributed in this repository; the installer downloads the model from Google's published MediaPipe model storage.
