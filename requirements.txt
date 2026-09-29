@@ -1,0 +1,8 @@
+# Office Vision Tracker
+# opencv-contrib-python provides cv2. Do not also install opencv-python:
+# the two packages overwrite each other and break MediaPipe on Windows.
+# Versions are pinned to the set verified with this project.
+PySide6==6.11.2
+numpy==2.5.3
+opencv-contrib-python==5.0.0.93
+mediapipe==1.0.1
